@@ -1,44 +1,145 @@
-import Link from "next/link";
-import Nav from "../ui/nav";
+'use client';
 
-export default function RegisterPage() {
+import Link from "next/link";
+import { useState } from "react";
+import { useAuth } from "@/app/lib/auth-context";
+import { useRouter } from "next/navigation";
+
+export default function SignupPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { signup } = useAuth();
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await signup(email, password, name);
+      router.push("/app");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Signup failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <main className="min-h-screen bg-background text-slate-950">
-      <Nav />
-      <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-3xl items-center px-4 py-12 sm:px-6 lg:px-8">
-        <div className="w-full rounded-4xl bg-white p-8 shadow-2xl shadow-slate-200/50 sm:p-10">
-          <div className="mb-8 text-center">
-            <p className="text-sm uppercase tracking-[0.3em] text-emerald-700">Register</p>
-            <h1 className="mt-4 text-3xl font-semibold text-slate-950">Create your account</h1>
-            <p className="mt-3 text-sm leading-7 text-slate-600">Sign up for instant access to banking, savings, and smart money tools.</p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white flex items-center justify-center px-4">
+      <div className="w-full max-w-md">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-lg font-bold text-white mb-4">
+            CB
+          </div>
+          <h1 className="text-3xl font-bold text-slate-950">Join Crane Bank</h1>
+          <p className="mt-2 text-slate-600">Create your account in just a few minutes</p>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <div className="rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700">
+              {error}
+            </div>
+          )}
+
+          <div>
+            <label className="block text-sm font-semibold text-slate-950 mb-2">
+              Full name
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="John Doe"
+              required
+              className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-950 placeholder-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+            />
           </div>
 
-          <form className="grid gap-6">
-            <label className="block text-sm font-medium text-slate-700">
-              Full name
-              <input type="text" required className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200" />
-            </label>
-            <label className="block text-sm font-medium text-slate-700">
+          <div>
+            <label className="block text-sm font-semibold text-slate-950 mb-2">
               Email address
-              <input type="email" required className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200" />
             </label>
-            <label className="block text-sm font-medium text-slate-700">
-              Password
-              <input type="password" required className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200" />
-            </label>
-            <button type="submit" className="inline-flex items-center justify-center rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700">
-              Create account
-            </button>
-          </form>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              required
+              className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-950 placeholder-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+            />
+          </div>
 
-          <p className="mt-6 text-center text-sm text-slate-600">
-            Already have an account?{' '}
-            <Link href="/login" className="font-semibold text-emerald-700 hover:text-emerald-800">
-              Sign in
-            </Link>
-          </p>
-        </div>
+          <div>
+            <label className="block text-sm font-semibold text-slate-950 mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              required
+              className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-950 placeholder-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-slate-950 mb-2">
+              Confirm password
+            </label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="••••••••"
+              required
+              className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-950 placeholder-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-lg bg-emerald-600 py-3 font-semibold text-white hover:bg-emerald-700 disabled:opacity-50 transition"
+          >
+            {loading ? "Creating account..." : "Create account"}
+          </button>
+        </form>
+
+        {/* Footer */}
+        <p className="text-center text-sm text-slate-600 mt-6">
+          Already have an account?{" "}
+          <Link href="/login" className="font-semibold text-emerald-600 hover:text-emerald-700">
+            Sign in here
+          </Link>
+        </p>
+
+        <p className="text-center text-sm text-slate-600 mt-4">
+          <Link href="/" className="hover:text-slate-950">
+            ← Back to home
+          </Link>
+        </p>
       </div>
-    </main>
+    </div>
   );
 }
