@@ -14,7 +14,7 @@ const cards = [
   { title: "Pending payments", value: "$3,820", subtitle: "Upcoming bills" },
 ];
 
-export default function DashboardShell({userName}: {userName: string}) {
+export default function DashboardShell({ userName }: { userName?: string }) {
   return (
     <main className="min-h-screen bg-background text-slate-950">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -24,7 +24,7 @@ export default function DashboardShell({userName}: {userName: string}) {
               <div>
                 <p className="text-sm uppercase tracking-[0.3em] text-emerald-700">Welcome back</p>
                 <h1 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
-                  Hi, {userName}.
+                  Hi, {userName || "User"}.
                 </h1>
                 <p className="mt-4 max-w-2xl text-base leading-8 text-slate-600">
                   Your banking dashboard gives you an instant snapshot of accounts, spending, and opportunities to save more.
