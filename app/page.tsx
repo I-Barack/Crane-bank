@@ -84,7 +84,7 @@ export default function LandingPage() {
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
               <Link
-                href="/signup"
+                href="/register"
                 className="inline-flex items-center justify-center rounded-lg bg-slate-950 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition hover:bg-slate-800"
               >
                 Get Started
@@ -96,7 +96,7 @@ export default function LandingPage() {
                 Learn more...
               </Link>
             </div>
-            <div className="mt-12 grid gap-6 sm:grid-cols-3">
+            <div className="mt-12 grid gap-6 grid-cols-3">
               <div>
                 <p className="text-2xl font-bold text-slate-950">100K+</p>
                 <p className="text-sm text-slate-600">Active Users</p>
@@ -112,36 +112,12 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="relative">
-            <div className="absolute inset-0 -right-8 top-8 rounded-[2rem] bg-gradient-to-br from-emerald-200/40 to-teal-200/40 blur-3xl" />
-            <div className="relative rounded-2xl border border-white/70 bg-gradient-to-br from-white to-slate-50 p-8 shadow-2xl">
-              <div className="space-y-4">
-                <div className="rounded-lg bg-gradient-to-r from-slate-100 to-slate-50 p-4">
-                  <p className="text-xs text-slate-500 uppercase">Available Balance</p>
-                  <p className="mt-2 text-3xl font-bold text-slate-950">$12,480.50</p>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-lg bg-emerald-50 p-3">
-                    <p className="text-xs text-emerald-700">Monthly Spend</p>
-                    <p className="mt-1 text-lg font-bold text-slate-950">$2,340</p>
-                  </div>
-                  <div className="rounded-lg bg-blue-50 p-3">
-                    <p className="text-xs text-blue-700">Savings Goal</p>
-                    <p className="mt-1 text-lg font-bold text-slate-950">42%</p>
-                  </div>
-                </div>
-                <div className="rounded-lg border border-slate-200 bg-white p-4">
-                  <p className="text-xs text-slate-500 uppercase">Quick Actions</p>
-                  <div className="mt-3 grid grid-cols-2 gap-2">
-                    <button className="rounded-lg bg-slate-100 py-2 text-xs font-semibold text-slate-950 transition hover:bg-slate-200">
-                      Send
-                    </button>
-                    <button className="rounded-lg bg-slate-100 py-2 text-xs font-semibold text-slate-950 transition hover:bg-slate-200">
-                      Request
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div className="absolute w-full h-full inset-0 -right-8 top-8 rounded-[2rem] bg-gradient-to-br from-emerald-200/40 to-teal-200/40 blur-3xl" />
+            <img
+              src="/landing-img.jpg"
+              alt="Landing Image mockup"
+              className="relative rounded-2xl shadow-2xl shadow-slate-200/40"
+            />
           </div>
         </div>
       </section>
@@ -208,7 +184,7 @@ export default function LandingPage() {
           </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center sm:items-center">
             <Link
-              href="/signup"
+              href="/register"
               className="font-[--font-poppins] inline-flex items-center justify-center rounded-lg bg-white px-8 py-3 font-semibold text-emerald-600 shadow-lg transition hover:bg-slate-50"
             >
               Sign up free
