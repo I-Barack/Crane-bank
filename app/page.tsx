@@ -162,7 +162,15 @@ export default function LandingPage() {
           <div className="grid gap-8 md:grid-cols-3">
             {testimonials.map((testimonial) => (
               <div key={testimonial.name} className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-lg transition">
-                <div className="mb-4 text-4xl">{testimonial.avatar}</div>
+                <div className="mb-4 inline-flex items-center gap-4">
+                  <Image
+                    src={testimonial.avatar}
+                    alt={testimonial.name}
+                    width={48}
+                    height={48}
+                    className="rounded-full object-cover"
+                  />
+                </div>
                 <p className="text-slate-600 italic">&apos;{testimonial.text}&apos;</p>
                 <div className="mt-4">
                   <p className="font-[--font-poppins] font-semibold text-slate-950">{testimonial.name}</p>
