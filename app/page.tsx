@@ -163,13 +163,14 @@ export default function LandingPage() {
             {testimonials.map((testimonial) => (
               <div key={testimonial.name} className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-lg transition">
                 <div className="mb-4 inline-flex items-center gap-4">
-                  <Image
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    width={48}
-                    height={48}
-                    className="rounded-full object-cover"
-                  />
+                  <div className="relative h-14 w-14 overflow-hidden rounded-[1.75rem] border border-slate-200 bg-slate-100 shadow-sm">
+                    <Image
+                      src={testimonial.avatar}
+                      alt={testimonial.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                 </div>
                 <p className="text-slate-600 italic">&apos;{testimonial.text}&apos;</p>
                 <div className="mt-4">
