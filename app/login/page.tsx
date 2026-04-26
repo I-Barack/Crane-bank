@@ -20,7 +20,7 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      router.push("/app");
+      router.push("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
@@ -102,7 +102,7 @@ export default function LoginPage() {
         {/* Footer */}
         <p className="text-center text-sm text-slate-600">
           Don't have an account?{" "}
-          <Link href="/signup" className="font-semibold text-emerald-600 hover:text-emerald-700">
+          <Link href="/register" className="font-semibold text-emerald-600 hover:text-emerald-700">
             Sign up free
           </Link>
         </p>

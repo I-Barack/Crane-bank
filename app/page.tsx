@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { useAuth } from "./lib/auth-context";
-import { FaCreditCard, FaGlobeAmericas, FaPiggyBank, FaShieldAlt, FaArrowRight, FaFeather } from 'react-icons/fa';
+import Image from "next/image";
+import { FaCreditCard, FaGlobeAmericas, FaPiggyBank, FaShieldAlt } from 'react-icons/fa';
 
 const features = [
   {
@@ -30,19 +30,19 @@ const testimonials = [
     name: "Sarah Chen",
     role: "Freelancer",
     text: "Finally a bank that doesn't treat me like a number. Open in 10 mins!",
-    avatar: "👩‍💼",
+    avatar: "https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=100",
   },
   {
     name: "James Rodriguez",
     role: "Digital Nomad",
     text: "Best for travel. Real exchange rates, no hidden fees. Worth every penny.",
-    avatar: "👨‍💻",
+    avatar: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=100",
   },
   {
     name: "Amara Okonkwo",
     role: "Entrepreneur",
     text: "Perfect for my business. Fast transfers and instant notifications.",
-    avatar: "👩‍🚀",
+    avatar: "https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=100",
   },
 ];
 
@@ -113,10 +113,11 @@ export default function LandingPage() {
           </div>
           <div className="relative">
             <div className="absolute w-full h-full inset-0 -right-8 top-8 rounded-[2rem] bg-gradient-to-br from-emerald-200/40 to-teal-200/40 blur-3xl" />
-            <img
+            <Image
+              fill
               src="/landing-img.jpg"
               alt="Landing Image mockup"
-              className="relative rounded-2xl shadow-2xl shadow-slate-200/40"
+              className="rounded-2xl shadow-2xl shadow-slate-200/40"
             />
           </div>
         </div>
@@ -162,7 +163,7 @@ export default function LandingPage() {
             {testimonials.map((testimonial) => (
               <div key={testimonial.name} className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-lg transition">
                 <div className="mb-4 text-4xl">{testimonial.avatar}</div>
-                <p className="text-slate-600 italic">"{testimonial.text}"</p>
+                <p className="text-slate-600 italic">&apos;{testimonial.text}&apos;</p>
                 <div className="mt-4">
                   <p className="font-[--font-poppins] font-semibold text-slate-950">{testimonial.name}</p>
                   <p className="text-sm text-slate-500">{testimonial.role}</p>
