@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from './supabase-client';
 
 interface User {
   id: string;
@@ -24,62 +25,78 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate checking if user is already logged in (from localStorage)
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (e) {
-        localStorage.removeItem('user');
+    // Get initial session
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        setUser({
+          id: session.user.id,
+          email: session.user.email!,
+          name: session.user.user_metadata?.name || session.user.email!.split('@')[0],
+          createdAt: session.user.created_at,
+        });
       }
-    }
-    setLoading(false);
+      setLoading(false);
+    };
+
+    getSession();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session?.user) {
+          setUser({
+            id: session.user.id,
+            email: session.user.email!,
+            name: session.user.user_metadata?.name || session.user.email!.split('@')[0],
+            createdAt: session.user.created_at,
+          });
+        } else {
+          setUser(null);
+        }
+        setLoading(false);
+      }
+    );
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const login = async (email: string, password: string) => {
     setLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-    // For demo: create user if credentials are valid
-    if (email && password.length >= 6) {
-      const newUser: User = {
-        id: `user_${Date.now()}`,
-        email,
-        name: email.split('@')[0],
-        createdAt: new Date().toISOString(),
-      };
-      setUser(newUser);
-      localStorage.setItem('user', JSON.stringify(newUser));
-    } else {
-      throw new Error('Invalid credentials');
+    if (error) {
+      setLoading(false);
+      throw new Error(error.message);
     }
-    setLoading(false);
+    // User state will be updated by the auth state change listener
   };
 
   const signup = async (email: string, password: string, name: string) => {
     setLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name,
+        },
+      },
+    });
 
-    if (email && password.length >= 6 && name) {
-      const newUser: User = {
-        id: `user_${Date.now()}`,
-        email,
-        name,
-        createdAt: new Date().toISOString(),
-      };
-      setUser(newUser);
-      localStorage.setItem('user', JSON.stringify(newUser));
-    } else {
-      throw new Error('Invalid signup data');
+    if (error) {
+      setLoading(false);
+      throw new Error(error.message);
     }
-    setLoading(false);
+    // User state will be updated by the auth state change listener
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
+    supabase.auth.signOut();
+    // User state will be updated by the auth state change listener
   };
 
   return (

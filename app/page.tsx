@@ -197,7 +197,7 @@ export default function LandingPage() {
               href="/register"
               className="font-[--font-poppins] inline-flex items-center justify-center rounded-lg bg-white px-8 py-3 font-semibold text-emerald-600 shadow-lg transition hover:bg-slate-50"
             >
-              Sign up free
+              Sign up
             </Link>
             <Link
               href="/login"

@@ -20,7 +20,7 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      router.push("/dashboard");
+      router.push("/home");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
@@ -29,11 +29,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 to-white flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-lg font-bold text-white mb-4">
+          <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-emerald-500 to-teal-600 text-lg font-bold text-white mb-4">
             CB
           </div>
           <h1 className="text-3xl font-bold text-slate-950">Welcome back</h1>
@@ -92,24 +92,17 @@ export default function LoginPage() {
           <div className="flex-1 border-t border-slate-200" />
         </div>
 
-        {/* Demo Info */}
-        <div className="rounded-lg bg-slate-100 p-4 text-sm text-slate-700 mb-6">
-          <p className="font-semibold mb-2">Demo Account:</p>
-          <p>Email: demo@example.com</p>
-          <p>Password: password123</p>
-        </div>
-
         {/* Footer */}
         <p className="text-center text-sm text-slate-600">
           Don't have an account?{" "}
           <Link href="/register" className="font-semibold text-emerald-600 hover:text-emerald-700">
-            Sign up free
+            Sign up
           </Link>
         </p>
 
         <p className="text-center text-sm text-slate-600 mt-4">
           <Link href="/" className="hover:text-slate-950">
-            ← Back to home
+            ← Back to landing
           </Link>
         </p>
       </div>
